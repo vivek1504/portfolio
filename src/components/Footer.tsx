@@ -3,7 +3,7 @@ import { Github, Linkedin, Mail } from 'lucide-react';
 export const Footer = () => {
   return (
     <footer className="border-t bg-background">
-      <div className="container flex flex-col md:flex-row items-center justify-between gap-4 py-8">
+      <div className="container flex flex-col md:flex-row items-center justify-between gap-4 py-6">
         <p className="text-sm text-muted-foreground">
           © 2025 Vivek Jadhav. All rights reserved.
         </p>

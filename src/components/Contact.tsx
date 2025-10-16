@@ -1,29 +1,57 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { toast } from 'sonner';
 import { ArrowRight } from 'lucide-react';
 import Socials from './ui/Socials';
+import emailjs from '@emailjs/browser';
 
 export const Contact = () => {
+  const formRef = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    const successSound = new Audio('/success.mp3');
     e.preventDefault();
-    toast.success('Message sent successfully!');
-    setFormData({ name: '', email: '', message: '' });
+    if (!formRef.current) return;
+
+    const sendPromise = emailjs.sendForm(
+      import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+      formRef.current,
+      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+    );
+
+    toast.promise(sendPromise, {
+      loading: 'Sending message...',
+      success: 'Message sent successfully!',
+      error: 'Failed to send message. Please try again.',
+    });
+
+    try {
+      await sendPromise;
+      successSound.play().catch((err) => {
+        console.warn(
+          'Sound play failed (probably due to browser restrictions):',
+          err
+        );
+      });
+
+      setFormData({ name: '', email: '', message: '' });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
     <section id="contact" className="container py-20 my-24">
       <div className="max-w-7xl">
         <div className="flex flex-col md:flex-row justify-between gap-16">
-          {/* Left section */}
           {/* Left section */}
           <div className="w-full md:w-1/2 flex flex-col justify-between animate-fade-in">
             {/* Top content */}
@@ -46,10 +74,8 @@ export const Contact = () => {
                   </h3>
                   <p className="text-lg">
                     <a
-                      href="https://mail.google.com/mail/?view=cm&fs=1&to=jadhavvivek2743@gmail.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className=" hover:underline  cursor-none cursor-target "
+                      href="mailto:jadhavvivek2743@gmail.com"
+                      className="hover:underline cursor-none cursor-target"
                     >
                       jadhavvivek2743@gmail.com
                     </a>
@@ -60,12 +86,12 @@ export const Contact = () => {
                   <h3 className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
                     Location
                   </h3>
-                  <p className="text-lg">Vadadora, India</p>
+                  <p className="text-lg">Vadodara, India</p>
                 </div>
               </div>
             </div>
 
-            {/* Socials at the bottom */}
+            {/* Socials */}
             <div className="mt-6">
               <h3 className="text-sm font-medium uppercase tracking-wider text-muted-foreground mb-4">
                 Socials
@@ -77,6 +103,7 @@ export const Contact = () => {
           {/* Right section (form) */}
           <div className="md:w-2/5 animate-fade-in">
             <form
+              ref={formRef}
               onSubmit={handleSubmit}
               className="space-y-6 border-2 p-8 bg-card hover:border-foreground/20 transition-colors"
             >
@@ -89,15 +116,15 @@ export const Contact = () => {
                 </label>
                 <Input
                   id="name"
-                  className=" cursor-target"
+                  name="user_name"
                   value={formData.name}
+                  className="cursor-target cursor-none"
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
                   }
                   required
                 />
               </div>
-
               <div className="space-y-2">
                 <label
                   htmlFor="email"
@@ -106,9 +133,10 @@ export const Contact = () => {
                   Email
                 </label>
                 <Input
-                  className=" cursor-target"
+                  className="cursor-target cursor-none"
                   id="email"
                   type="email"
+                  name="user_email"
                   value={formData.email}
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
@@ -116,7 +144,6 @@ export const Contact = () => {
                   required
                 />
               </div>
-
               <div className="space-y-2">
                 <label
                   htmlFor="message"
@@ -126,12 +153,13 @@ export const Contact = () => {
                 </label>
                 <Textarea
                   id="message"
+                  name="message"
                   rows={6}
                   value={formData.message}
                   onChange={(e) =>
                     setFormData({ ...formData, message: e.target.value })
                   }
-                  className="resize-none  cursor-target"
+                  className="cursor-target cursor-none resize-none "
                   required
                 />
               </div>
@@ -139,11 +167,11 @@ export const Contact = () => {
               <Button
                 type="submit"
                 size="lg"
-                className="w-full group cursor-none cursor-target"
+                className="w-full group cursor-target cursor-none"
               >
                 Send Message
                 <ArrowRight
-                  className="ml-2 transition-transform group-hover:translate-x-1 "
+                  className="ml-2 transition-transform group-hover:translate-x-1"
                   size={20}
                 />
               </Button>
