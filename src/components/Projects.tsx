@@ -4,43 +4,42 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { ExternalLink, Github } from 'lucide-react';
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ExternalLink, Github } from "lucide-react";
 
 const projects = [
   {
-    title: 'PicGen | AI Image Generator',
+    title: "Forge | In-Browser Node IDE",
     description:
-      'Full-stack web app that generates AI images from text prompts',
-    tech: ['React', 'PostgreSQL', 'Docker', 'Node.js'],
-    github: 'https://github.com/vivek1504/picgen',
-    demo: 'https://picgenai.vercel.app/',
-  },
-
-  {
-    title: 'Pulse | Real-Time Chat Application',
-    description:
-      'A full-stack chat application enabling instant messaging between users in real time.',
-    tech: ['React', 'Node.js', 'Socket.io', 'PostgreSQL'],
-    github: 'https://github.com/vivek1504/pulse',
-    demo: 'https://github.com/vivek1504/pulse',
+      "in-browser IDE that provides a real Node.js development environment with an interactive terminal, file system, and live preview.",
+    tech: ["React", "Webcontainer", "XtermJs", "Monaco Editor"],
+    github: "https://github.com/vivek1504/forge",
+    demo: "https://forge.vivekjadhav.xyz/",
   },
   {
-    title: 'Blockchain based blue carbon registry',
+    title: "Spark | AI Website Builder",
     description:
-      'A full-stack blockchain-based platform for managing blue carbon credits.',
-    tech: ['React', 'Solana', 'Node', 'PostgresSQL'],
-    github: 'https://github.com/vivek1504/blue_carbon',
-    demo: 'https://github.com/vivek1504/blue_carbon',
+      "an AI-powered, in-browser website builder that turns natural language prompts into fully functional, editable web applications.",
+    tech: ["React", "TypeScript", "Clerk", "webConatiner"],
+    github: "https://github.com/vivek1504/spark",
+    demo: "https://spark.vivekjadhav.xyz/",
   },
   {
-    title: 'flappy bird',
+    title: "PicGen | AI Image Generator",
     description:
-      'Conversational AI interface with natural language processing capabilities.',
-    tech: ['Python', 'Pygame'],
-    github: 'https://github.com/vivek1504/flappy_bird',
-    demo: 'https://github.com/vivek1504/flappy_bird.',
+      "Full-stack web app that generates AI images from text prompts",
+    tech: ["React", "PostgreSQL", "Docker", "Node.js"],
+    github: "https://github.com/vivek1504/picgen",
+    demo: "https://picgenai.vercel.app/",
+  },
+  {
+    title: "Blockchain based blue carbon registry",
+    description:
+      "A full-stack blockchain-based platform for managing blue carbon credits.",
+    tech: ["React", "Solana", "Node", "PostgresSQL"],
+    github: "https://github.com/vivek1504/blue_carbon",
+    demo: "https://github.com/vivek1504/blue_carbon",
   },
 ];
 
